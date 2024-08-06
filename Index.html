@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario de Datos</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+    form {
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+      border: 2px solid green;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    input, select {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+    input[type="submit"] {
+      background: green;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <form id="dataForm">
+    <label>Nombre y Apellido: <input type="text" name="nombreApellido" required></label>
+    <label>Empresa: <input type="text" name="empresa" required></label>
+    <label>DNI: <input type="text" name="dni" required></label>
+    <label>Curso: <input type="text" name="curso" required></label>
+    <label>Email: <input type="email" name="email" required></label>
+    <input type="submit" value="Cargar Datos">
+  </form>
+  <script>
+    document.getElementById('dataForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const form = new FormData(this);
+      fetch('https://script.google.com/macros/s/AKfycbx0bYgPPsDpi5OD67i4uszp-UJGO7djSYmC29uoNBE6wDp0WiMd_n_rD9cz_Cxg0EP4/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify(Object.fromEntries(form.entries())),
+      })
+      .then(response => response.text())
+      .then(data => alert(data))
+      .catch(error => console.error('Error:', error));
+    });
+  </script>
+</body>
+</html>
